@@ -24,8 +24,24 @@ export function AuthProvider({ children }) {
     return () => subscription.unsubscribe();
   }, []);
 
+  const validateEmail = (email) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      throw new Error("Por favor, insira um email válido");
+    }
+    
+    // Não permitir emails de exemplo/teste
+    const blockedDomains = ['example.com', 'test.com'];
+    const domain = email.split('@')[1];
+    if (blockedDomains.includes(domain)) {
+      throw new Error("Por favor, use um email válido. Emails de exemplo não são permitidos.");
+    }
+  };
+
   const login = async (email, password) => {
     try {
+      validateEmail(email);
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
@@ -50,6 +66,8 @@ export function AuthProvider({ children }) {
 
   const register = async (email, password) => {
     try {
+      validateEmail(email);
+      
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -62,10 +80,17 @@ export function AuthProvider({ children }) {
         description: "Verifique seu email para confirmar o cadastro.",
       });
     } catch (error) {
+      let errorMessage = error.message;
+      
+      // Melhor tratamento para erros específicos
+      if (error.message.includes('email_address_invalid')) {
+        errorMessage = "O email fornecido é inválido. Por favor, use um email válido.";
+      }
+      
       toast({
         variant: "destructive",
         title: "Erro ao fazer cadastro",
-        description: error.message,
+        description: errorMessage,
       });
     }
   };
