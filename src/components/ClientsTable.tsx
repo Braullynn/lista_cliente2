@@ -2,13 +2,7 @@ import React from 'react';
 import { Table, TableHeader, TableBody, TableHead, TableRow, TableCell } from "@/components/ui/table";
 import { Pencil, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-
-interface Client {
-  id: number;
-  name: string;
-  email: string;
-  phone: string;
-}
+import { Client } from '@/types/client';
 
 interface ClientsTableProps {
   clients: Client[];

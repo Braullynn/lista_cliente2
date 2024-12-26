@@ -3,24 +3,18 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-
-interface Client {
-  id?: number;
-  name: string;
-  email: string;
-  phone: string;
-}
+import { NewClient } from '@/types/client';
 
 interface ClientFormProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onSubmit: (client: Client) => void;
-  initialData?: Client;
+  onSubmit: (client: NewClient) => void;
+  initialData?: NewClient;
   title: string;
 }
 
 const ClientForm = ({ open, onOpenChange, onSubmit, initialData, title }: ClientFormProps) => {
-  const [formData, setFormData] = React.useState<Client>({
+  const [formData, setFormData] = React.useState<NewClient>({
     name: '',
     email: '',
     phone: '',

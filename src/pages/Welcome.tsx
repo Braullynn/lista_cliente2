@@ -8,13 +8,7 @@ import { Plus, Search } from 'lucide-react';
 import ClientsTable from '@/components/ClientsTable';
 import ClientForm from '@/components/ClientForm';
 import { initializeDatabase } from '@/lib/database';
-
-interface Client {
-  id?: number;
-  name: string;
-  email: string;
-  phone: string;
-}
+import { Client, NewClient } from '@/types/client';
 
 const Welcome = () => {
   const { user, logout } = useAuth();
@@ -46,7 +40,7 @@ const Welcome = () => {
     }
   };
 
-  const handleAddClient = async (newClient: Client) => {
+  const handleAddClient = async (newClient: NewClient) => {
     const { data, error } = await supabase
       .from('clients')
       .insert([newClient])
@@ -67,13 +61,13 @@ const Welcome = () => {
     }
   };
 
-  const handleEditClient = async (updatedClient: Client) => {
-    if (!updatedClient.id) return;
+  const handleEditClient = async (updatedClient: NewClient) => {
+    if (!editingClient?.id) return;
 
     const { error } = await supabase
       .from('clients')
       .update(updatedClient)
-      .eq('id', updatedClient.id);
+      .eq('id', editingClient.id);
 
     if (error) {
       toast({
