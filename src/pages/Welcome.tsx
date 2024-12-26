@@ -54,8 +54,9 @@ const Welcome = () => {
       });
     } else {
       toast({
-        title: "Cliente adicionado com sucesso!",
-        description: "O novo cliente foi cadastrado.",
+        variant: "success",
+        title: "Sucesso!",
+        description: "Cliente adicionado com sucesso!",
       });
       fetchClients();
     }
@@ -77,8 +78,9 @@ const Welcome = () => {
       });
     } else {
       toast({
-        title: "Cliente atualizado com sucesso!",
-        description: "As informações foram atualizadas.",
+        variant: "success",
+        title: "Sucesso!",
+        description: "Cliente atualizado com sucesso!",
       });
       setEditingClient(null);
       fetchClients();
@@ -99,8 +101,9 @@ const Welcome = () => {
       });
     } else {
       toast({
-        title: "Cliente removido com sucesso!",
-        description: "O cliente foi removido do sistema.",
+        variant: "success",
+        title: "Sucesso!",
+        description: "Cliente removido com sucesso!",
       });
       fetchClients();
     }
